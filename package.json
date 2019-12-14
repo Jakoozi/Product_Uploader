@@ -1,0 +1,45 @@
+{
+  "name": "reacttodo",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "emotion": "^10.0.23",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.27",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-moment": "^0.9.6",
+    "react-notifications": "^1.4.3",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "3.0.1",
+    "react-sound": "^1.2.0",
+    "react-spinners": "^0.6.1",
+    "react-toastify": "^5.4.0",
+    "sweetalert2": "^8.13.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scriptnpm starts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "proxy": "http://localhost:3000",
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
