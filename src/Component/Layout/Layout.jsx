@@ -13,7 +13,7 @@ class LayoutComponent extends React.Component {
                         <div className='content-w '>
                             <div
                                 className='with-content-panel'
-                                style={{ minHeight: '120vh' }}>
+                                style={{ minHeight: '90vh' }}>
                                 {this.props.children}
                             </div>
                         </div>

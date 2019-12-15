@@ -5,6 +5,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "cloudinary-react": "^1.2.1",
     "emotion": "^10.0.23",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
@@ -35,7 +36,7 @@
       "not dead",
       "not op_mini all"
     ],
-    "proxy": "http://localhost:3000",
+    "proxy": "http://localhost:3001",
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
