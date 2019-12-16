@@ -11,7 +11,6 @@ export default class Upload extends Component {
 
   ],
     loaded:false,  
-    login:false
   };
 
   componentDidMount(){
@@ -37,14 +36,11 @@ export default class Upload extends Component {
     let products = datarecived.data.records;
     this.setState({data:products, loaded:true})
 
-    // console.log(products, `products is console logged`)
-    // console.log(this.state.data, `data is consoled`);
   }
   handleEditClick = (productid) =>{
-    // window.localStorage.setItem("productId", (productid));
-    this.setState({login:true});
-
-    console.log(productid, `productid is consolelogged`,this.state.login, `login is console loged`)
+    window.localStorage.setItem("productId", (productid));
+  
+    console.log(productid, `productid is consolelogged`)
 
 }
 timeFormater = (date) =>{
@@ -78,8 +74,7 @@ timeFormater = (date) =>{
               <td><h5>{data.name}</h5></td>
               <td><h5>{this.timeFormater(data.createdAtTimeStamp)}</h5></td>
               <td><h5>{this.timeFormater(data.updatedAtTimeStamp)}</h5></td>
-              <td onClick={(e,id = data.productId) => this.handleEditClick(e,id)}>
-              {/* <td> */}
+              <td onClick={() => this.handleEditClick(data.productId)}>
                 <div class="badge badge-danger">
                   <Link to="/Edit" className="nav-link"> 
                     Edit
