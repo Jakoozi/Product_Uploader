@@ -17,7 +17,7 @@ class SidebarComponent extends React.Component {
           <li className="sub-menu">
             <Link to="/" className="nav-link">
               <div className="icon-w">
-                <div className="os-icon os-icon-edit-1"></div>
+                <div className="os-icon os-icon-pencil-1"></div>
               </div>
               {/* <span>Upload</span> */}
               Upload
@@ -27,20 +27,11 @@ class SidebarComponent extends React.Component {
             <Link to="/View" className="nav-link">
               <div className="icon-w">
                 <div className="os-icon
-                os-icon-window-content">
+                os-icon-grid-circles">
                 </div>
               </div>
               {/* <span>View Products</span> */}
               View Products
-            </Link>
-          </li>
-          <li className="sub-menu">
-            <Link to="/Edit" className="nav-link">
-              <div className="icon-w">
-                <div className="os-icon os-icon-edit-1"></div>
-              </div>
-              {/* <span>Upload</span> */}
-              Edit
             </Link>
           </li>
         </ul>

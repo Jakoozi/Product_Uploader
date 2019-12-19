@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import Layout from "../Layout/Layout";
-import {Image, Video, Transformation, CloudinaryContext} from 'cloudinary-react';
 import Swal from "sweetalert2";
 import  Moment from 'react-moment';
 import { Link } from "react-router-dom";
+import _ from 'lodash';
+import Delete from '../../JsFolder/DeleteProduct';
 
 export default class Upload extends Component {
   state = {
     data:[
 
   ],
-    loaded:false,  
+    loaded:false, 
+     delete : new Delete()
+
   };
 
   componentDidMount(){
@@ -33,57 +36,65 @@ export default class Upload extends Component {
        
   }
   addDataToState = (datarecived) => {
-    let products = datarecived.data.records;
-    this.setState({data:products, loaded:true})
-
+      _.reverse(datarecived);
+      let products = datarecived.data.records;
+      _.reverse(products);
+      this.setState({data:products, loaded:true})
   }
-  handleEditClick = (productid) =>{
-    window.localStorage.setItem("productId", (productid));
-  
-    console.log(productid, `productid is consolelogged`)
+  //here the entire product is passed and stored to the browser
+  handleEditClick = (product) =>{
+    window.localStorage.setItem("product", JSON.stringify(product));
+  }
+  handleDeletteClick = ( productId) =>{
 
-}
-timeFormater = (date) =>{
-  let formatedDate = date;
-  return <Moment format="ddd Do MMM, YYYY HH:mm">{formatedDate}</Moment>
-}
+    let deleteproduct = this.state.delete;
+    deleteproduct.onDelete( productId, this.stateUpdater);
+  }
+  stateUpdater = (deletedProductId) =>{
+    let data = this.state.data;
+    let dataUpdate = data.filter(product => product.productId !== deletedProductId);
+  
+    this.setState({data:dataUpdate});
+  }
+  timeFormater = (date) =>{
+    let formatedDate = date;
+    return <Moment format="ddd Do MMM, YYYY HH:mm">{formatedDate}</Moment>
+  }
 
 
   render() {
-
+  
+    
     let data = this.state.data;
     let loaded = this.state.loaded;
     let all;
 
-    if (this.state.login == true) {
-      this.props.history.push("/Edit");
-      console.log(this.state.login, "second Login is console logged here");
-    }
-
     console.log(data, `render data is consoled`)
 
     if(loaded === true){
-      all = data.map(data =>{
+      all = data.map((data, index) =>{
         return(
-          <tbody>
+          <tbody key={data.productId}>
             <tr role="row" className="odd">
-              {/* <td><h5>{data.imageUrl}</h5></td> */}
               <td>
                 <img src={data.imageUrl} alt="product thumbnail" style={{ height: "80px", width: "80px"}}/>
               </td>
               <td><h5>{data.name}</h5></td>
               <td><h5>{this.timeFormater(data.createdAtTimeStamp)}</h5></td>
               <td><h5>{this.timeFormater(data.updatedAtTimeStamp)}</h5></td>
-              <td onClick={() => this.handleEditClick(data.productId)}>
-                <div class="badge badge-danger">
+              <td onClick={() => this.handleEditClick(data)}>
+                <div class="badge badge-warning">
                   <Link to="/Edit" className="nav-link"> 
-                    Edit
-                    <i class="os-icon os-icon-ui-15"></i>
+                    <h6>Edit Product</h6>
+                    <i class="os-icon os-icon-edit-1"></i>
                   </Link>
                 </div>
-                
-                 
-              
+              </td>
+              <td onClick={() => this.handleDeletteClick(data.productId)}>
+                <div class="btn btn-danger">
+                    <h6>Delete Product</h6>
+                    <i class="os-icon os-icon-ui-15"></i>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -120,6 +131,9 @@ timeFormater = (date) =>{
                                                                             <th class="sorting" tabindex="0" aria-controls="dataTable1" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style={{width: '280px'}}>
                                                                               <h6>Edit Product</h6>
                                                                             </th>
+                                                                            <th class="sorting" tabindex="0" aria-controls="dataTable1" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style={{width: '280px'}}>
+                                                                              <h6>Delete Product</h6>
+                                                                            </th>
                                                                     </tr>
                                                         </thead>
                                                         <tfoot>
@@ -128,8 +142,8 @@ timeFormater = (date) =>{
                                                                 <th rowspan="1" colspan="1">Produuct Name</th>
                                                                 <th rowspan="1" colspan="1">Created Date</th>
                                                                 <th rowspan="1" colspan="1">Updated Date</th>
-  
                                                                 <th rowspan="1" colspan="1">Edit Product</th>
+                                                                <th rowspan="1" colspan="1">Delete Product</th>
 
                                                             </tr>
                                                         </tfoot>
