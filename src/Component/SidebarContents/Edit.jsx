@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Layout from "../Layout/Layout";
 import Swal from "sweetalert2";
 import { css } from "@emotion/core";
-import { PacmanLoader	 } from 'react-spinners';
+import { BeatLoader	 } from 'react-spinners';
 
 const override = css`
   display: block;
@@ -222,11 +222,11 @@ export default class Edit extends Component {
     }
     spinLoader = () =>{
         return(
-          <div className="sweet-loading" style={{  paddingTop : `20vh`, paddingRight : `30vh` }}>
-              <PacmanLoader	
+          <div className="sweet-loading" style={{  paddingTop : `30vh`, paddingLeft : `50vh` }}>
+              <BeatLoader	
                   css={override}
                   sizeUnit={"px"}
-                  size={100} 
+                  size={80} 
                   color={"#2A68D4"}
                   loading={true}
               />
