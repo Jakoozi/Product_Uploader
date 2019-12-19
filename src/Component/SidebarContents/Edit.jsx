@@ -1,6 +1,16 @@
 import React, { Component } from "react";
 import Layout from "../Layout/Layout";
 import Swal from "sweetalert2";
+import { css } from "@emotion/core";
+import { PacmanLoader	 } from 'react-spinners';
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+  
+`;
+
 
 export default class Edit extends Component {
     state = {
@@ -10,6 +20,7 @@ export default class Edit extends Component {
         initialdata:{
         },
         imageurl:"",
+        display: true
     };
 
     componentWillMount(){
@@ -33,7 +44,8 @@ export default class Edit extends Component {
         console.log(this.state, `Data is logged`)
     };
     showWidget = () =>{     
-        
+        this.setState({ display: false});
+
         let widget = window.cloudinary.createUploadWidget({
             cloudName: "jakoozi",
             uploadPreset: "jakoozipreset",
@@ -47,6 +59,7 @@ export default class Edit extends Component {
         if (result.event === "success") {
             this.urlSetMethod(result.info.secure_url);
           }
+          this.setState({ display: true});
     }
     urlSetMethod =(imageurl) =>{
         this.setState({imageurl});
@@ -75,11 +88,14 @@ export default class Edit extends Component {
               text:  `${response.Message}`
             })
         }
+        this.setState({ display: true});
     
     
       }
     onSubmit = (e) => { 
         e.preventDefault();
+        this.setState({ display: false});
+
         let { imageurl } = this.state;
         let { name } = this.state.data;
         let { productId, staffId, productTag } = this.state.initialdata;
@@ -122,6 +138,7 @@ export default class Edit extends Component {
                   title:'Sorry',
                   text: `Something Went Wrong!`
                 })
+                this.setState({ display: true});
             })
           }    
           else
@@ -133,21 +150,15 @@ export default class Edit extends Component {
                   text: 'Fill In The Form Correctly'
                 }
               )
+              this.setState({ display: true});
           }
     }
- 
-   render(){
-    const imageurl = this.state.imageurl;
-    const { name } = this.state.data;
-    let btn = this.state.btn;
-  
+    editPageUi = () =>{
+        const imageurl = this.state.imageurl;
+        const { name } = this.state.data;
 
-    console.log(this.state, `STATE is consoled`)
-
-       return(
-        <div>
-            <Layout>
-                <div className="row">
+        return(
+            <div className="row">
                 <div className="col-md-3"></div>
         
                 <div className="col-md-6">
@@ -159,10 +170,10 @@ export default class Edit extends Component {
                         >
                             Edit A Product
                         </h3>
-                        <img src={imageurl}
+                        <image src={imageurl}
                             class="rounded" alt="Product Image"
                             style={{ height: "200px", width: "300px", marginLeft:"15vh"}}>
-                        </img>
+                        </image>
                         <button
                             className="btn btn-light btn-block btn-primary" 
                             style={{ marginBottom: "5vh", marginTop: "10vh" }} 
@@ -206,7 +217,32 @@ export default class Edit extends Component {
                     
                 </div>
                 <div className="col-md-3"></div>
-                </div>
+            </div>
+        );
+    }
+    spinLoader = () =>{
+        return(
+          <div className="sweet-loading" style={{  paddingTop : `20vh`, paddingRight : `30vh` }}>
+              <PacmanLoader	
+                  css={override}
+                  sizeUnit={"px"}
+                  size={100} 
+                  color={"#2A68D4"}
+                  loading={true}
+              />
+        </div>
+        )
+    }
+    
+ 
+   render(){
+    
+    console.log(this.state, `STATE is consoled`)
+
+       return(
+        <div>
+            <Layout>
+                {this.state.display ? this.editPageUi() : this.spinLoader()}
             </Layout>
         </div>
        );

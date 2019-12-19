@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import _ from 'lodash';
 import Delete from '../../JsFolder/DeleteProduct';
 
+
 export default class Upload extends Component {
   state = {
     data:[

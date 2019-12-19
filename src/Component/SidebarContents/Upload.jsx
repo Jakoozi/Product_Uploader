@@ -20,6 +20,7 @@ export default class Upload extends Component {
     },
     imageurl: "",
     btn: "",
+    display: true
   };
   handleInputChange = e => {
     let name = e.target.name;
@@ -53,12 +54,14 @@ export default class Upload extends Component {
           text:  `${response.Message}`
         })
     }
-
+    this.setState({ display: true});
 
   }
   onSubmit = async (e) => {
 
     e.preventDefault();
+    this.setState({ display: false});
+
     let { imageurl } = this.state;
     let { name } = this.state.data;
     let data1 = {
@@ -94,6 +97,7 @@ export default class Upload extends Component {
             title:'Sorry',
             text: `Something Went Wrong!`
           })
+          this.setState({ display: true});
       })
     }    
     else
@@ -105,9 +109,12 @@ export default class Upload extends Component {
             text: 'Fill In The Form Correctly'
           }
         )
+        this.setState({ display: true});
     }
+   
   }
   showWidget = () => {
+    this.setState({display: false });
 
     let widget = window.cloudinary.createUploadWidget({
       cloudName: "jakoozi",
@@ -123,20 +130,16 @@ export default class Upload extends Component {
     if (result.event === "success") {
       this.urlSetMethod(result.info.secure_url);
     }
+    this.setState({ display: true});
   }
   urlSetMethod = (imageurl) => {
     this.setState({ imageurl });
   }
-
-
-
-  
-  render() {
+  uploadPageUi = () =>{
     const { name, imageurl } = this.state;
     let btn = this.state.btn;
 
-    return (
-      <Layout>
+      return(
         <div className="row">
           <div className="col-md-3"></div>
           <div className="col-md-6">
@@ -203,6 +206,31 @@ export default class Upload extends Component {
           </div>
           <div className="col-md-3"></div>
         </div>
+      );
+}
+  spinLoader = () =>{
+    return(
+      <div className="sweet-loading" style={{  paddingTop : `20vh`, paddingRight : `30vh` }}>
+          <PacmanLoader	
+              css={override}
+              sizeUnit={"px"}
+              size={100} 
+              color={"#2A68D4"}
+              loading={true}
+          />
+    </div>
+    )
+ }
+
+
+
+  
+  render() {
+    
+
+    return (
+      <Layout>
+        {this.state.display ? this.uploadPageUi() : this.spinLoader()}
       </Layout>
     );
   }
