@@ -20,7 +20,7 @@ export default class Upload extends Component {
     },
     imageurl: "",
     btn: "",
-    display: false
+    display: true
   };
   handleInputChange = e => {
     let name = e.target.name;
@@ -186,10 +186,10 @@ export default class Upload extends Component {
                   value={name}
                 />
                 <br />
-                <div className="form-group">
+              {/* <div className="form-group">
                   <label htmlfor="name"><h5>Product Tag :</h5></label>
                   <EditableTagGroup/>
-              </div>
+              </div> */}
               </div>
               <br />
               <p>
