@@ -140,7 +140,7 @@ export default class Upload extends Component {
                                                         <tfoot>
                                                             <tr>
                                                                 <th rowspan="1" colspan="1">Image Thumbnail</th>
-                                                                <th rowspan="1" colspan="1">Produuct Name</th>
+                                                                <th rowspan="1" colspan="1">Product Name</th>
                                                                 <th rowspan="1" colspan="1">Created Date</th>
                                                                 <th rowspan="1" colspan="1">Updated Date</th>
                                                                 <th rowspan="1" colspan="1">Edit Product</th>

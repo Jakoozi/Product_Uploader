@@ -20,7 +20,8 @@ export default class Upload extends Component {
     },
     imageurl: "",
     btn: "",
-    display: true
+    display: true,
+    tags:[]
   };
   handleInputChange = e => {
     let name = e.target.name;
@@ -32,6 +33,18 @@ export default class Upload extends Component {
     this.setState({ data });
     console.log(this.state, `Data is logged`)
   };
+
+  addTags = (tagToAdd) => {
+    let { tags } = this.state;
+    if (tagToAdd && tags.indexOf(tagToAdd) === -1) {
+      tags = [...tags, tagToAdd];
+    }
+    console.log(tags);
+    this.setState({
+      tags
+    });
+  }
+
   responseSender = (response) =>{
     console.log(response, `RESPONSESENDER'S response is consoled`, response.status_code, `RESPONSE STATUS CODE IS CONSOLED`);
     if(response.status_code == 200)
@@ -40,7 +53,7 @@ export default class Upload extends Component {
       Swal.fire(
         {
           type: 'success',
-          title:'Sorry',
+          title:'Successful',
           text: `${response.message}`
         })
     }
@@ -58,59 +71,63 @@ export default class Upload extends Component {
 
   }
   onSubmit = async (e) => {
-
     e.preventDefault();
-    this.setState({ display: false});
+    let tag = new EditableTagGroup();
+    // let tagvalue = await tag.inputReturner();
+    // console.log(tagvalue, `Tag Value Is Consoled`)
+   
+    
+    // this.setState({ display: false});
 
     let { imageurl } = this.state;
     let { name } = this.state.data;
     let data1 = {
       name: name,
-      imageUrl: imageurl
+      imageUrl: imageurl,
+      productTag: tag.inputReturner()
     }
+    console.log(data1, `Data value is consoled`)
 
-    if (name && imageurl)  {
-
-      e.preventDefault();
-      let data = JSON.stringify(data1);
-      let url =`https://gateway.xend.tk/product/api/Product_Catalog/RegisterProduct`;
-
+    // if (name && imageurl)  {
+    //   let data = JSON.stringify(data1);
+    //   let url =`https://gateway.xend.tk/product/api/Product_Catalog/RegisterProduct`;
 
 
-      fetch(url,{
-        method: 'post',
-        body: data,
-        headers:{
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => response.json())
-      .then(json => {
-        console.log(json, "This is the json response");
-        this.responseSender(json);
-      })  
-      .catch(error => {
-        console.log(error)
-        Swal.fire(
-          {
-            type: 'error',
-            title:'Sorry',
-            text: `Something Went Wrong!`
-          })
-          this.setState({ display: true});
-      })
-    }    
-    else
-    {
-        Swal.fire(
-          {
-            type: 'warning',
-            title:'Please!',
-            text: 'Fill In The Form Correctly'
-          }
-        )
-        this.setState({ display: true});
-    }
+
+    //   fetch(url,{
+    //     method: 'post',
+    //     body: data,
+    //     headers:{
+    //       'Content-Type': 'application/json'
+    //     }
+    //   })
+    //   .then(response => response.json())
+    //   .then(json => {
+    //     console.log(json, "This is the json response");
+    //     this.responseSender(json);
+    //   })  
+    //   .catch(error => {
+    //     console.log(error)
+    //     Swal.fire(
+    //       {
+    //         type: 'error',
+    //         title:'Sorry',
+    //         text: `Something Went Wrong!`
+    //       })
+    //       this.setState({ display: true});
+    //   })
+    // }    
+    // else
+    // {
+    //     Swal.fire(
+    //       {
+    //         type: 'warning',
+    //         title:'Please!',
+    //         text: 'Fill In The Form Correctly'
+    //       }
+    //     )
+    //     this.setState({ display: true});
+    // }
    
   }
   showWidget = () => {
@@ -186,10 +203,10 @@ export default class Upload extends Component {
                   value={name}
                 />
                 <br />
-              {/* <div className="form-group">
+              <div className="form-group">
                   <label htmlfor="name"><h5>Product Tag :</h5></label>
-                  <EditableTagGroup/>
-              </div> */}
+                  <EditableTagGroup addTags={this.addTags} tags={this.state.tags} />
+              </div>
               </div>
               <br />
               <p>
@@ -210,7 +227,7 @@ export default class Upload extends Component {
 }
   spinLoader = () =>{
     return(
-      <div className="sweet-loading" style={{  paddingTop : `30vh`, paddingLeft : `50vh` }}>>
+      <div className="sweet-loading" style={{  paddingTop : `30vh`, paddingLeft : `50vh` }}>
           <BeatLoader	
               css={override}
               sizeUnit={"px"}

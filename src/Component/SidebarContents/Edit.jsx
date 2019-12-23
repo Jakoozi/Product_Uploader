@@ -74,7 +74,7 @@ export default class Edit extends Component {
           Swal.fire(
             {
               type: 'success',
-              title:'Sorry',
+              title:'Successful',
               text: `${response.message}`
             })
         }

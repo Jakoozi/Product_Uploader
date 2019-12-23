@@ -6,7 +6,7 @@ export default class EditableTagGroup extends Component {
     
     state = {
       // tags: ['Tag 2'],
-      tags: [],
+      data : {name: ""},
       inputVisible: false,
       inputValue: '',
     };
@@ -20,6 +20,11 @@ export default class EditableTagGroup extends Component {
     showInput = () => {
       this.setState({ inputVisible: true }, () => this.input.focus());
     };
+    inputReturner = () => {
+      let value = this.state.inputValue;
+      return value;
+    }
+
   
     handleInputChange = e => {
       this.setState({ inputValue: e.target.value });
@@ -28,22 +33,15 @@ export default class EditableTagGroup extends Component {
   
     handleInputConfirm = () => {
       const { inputValue } = this.state;
-      let { tags } = this.state;
-      if (inputValue && tags.indexOf(inputValue) === -1) {
-        tags = [...tags, inputValue];
-      }
-      console.log(tags);
-      this.setState({
-        tags,
-        inputVisible: false,
-        inputValue: '',
-      });
+      this.props.addTags(inputValue)
     };
   
     saveInputRef = input => (this.input = input);
   
     render() {
-      const { tags, inputVisible, inputValue } = this.state;
+      // const { tags, inputVisible, inputValue } = this.state;
+      const { inputVisible, inputValue } = this.state;
+      const { tags } = this.props;
       return (
         <div>
           {tags.map((tag, index) => {
