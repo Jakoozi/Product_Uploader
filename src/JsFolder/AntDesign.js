@@ -11,21 +11,9 @@ export default class EditableTagGroup extends Component {
       inputValue: '',
     };
   
-    handleClose = removedTag => {
-      const tags = this.state.tags.filter(tag => tag !== removedTag);
-      console.log(tags);
-      this.setState({ tags });
-    };
-  
     showInput = () => {
       this.setState({ inputVisible: true }, () => this.input.focus());
     };
-    inputReturner = () => {
-      let value = this.state.inputValue;
-      return value;
-    }
-
-  
     handleInputChange = e => {
       this.setState({ inputValue: e.target.value });
       console.log(this.state.inputValue, `input value is consoled`)
@@ -34,6 +22,7 @@ export default class EditableTagGroup extends Component {
     handleInputConfirm = () => {
       const { inputValue } = this.state;
       this.props.addTags(inputValue)
+      this.setState({inputValue:''});
     };
   
     saveInputRef = input => (this.input = input);
@@ -42,12 +31,13 @@ export default class EditableTagGroup extends Component {
       // const { tags, inputVisible, inputValue } = this.state;
       const { inputVisible, inputValue } = this.state;
       const { tags } = this.props;
+      const { handleClose } = this.props;
       return (
         <div>
           {tags.map((tag, index) => {
             const isLongTag = tag.length > 20;
             const tagElem = (
-              <Tag key={tag} closable={index !== 0} onClose={() => this.handleClose(tag)}>
+              <Tag key={tag} closable={index !== 0} onClose={() => handleClose(tag)}>
                 {isLongTag ? `${tag.slice(0, 20)}...` : tag}
               </Tag>
             );
@@ -72,7 +62,7 @@ export default class EditableTagGroup extends Component {
             />
           )}
           {!inputVisible && (
-            <Tag onClick={this.showInput} style={{ background: '#fff', borderStyle: 'dashed' }}>
+            <Tag onClick={this.showInput} style={{ background: '#fff', borderStyle: 'solid' }}>
               <Icon type="plus" /> New Tag
             </Tag>
           )}

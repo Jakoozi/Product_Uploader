@@ -21,7 +21,7 @@ export default class Upload extends Component {
     imageurl: "",
     btn: "",
     display: true,
-    tags:[]
+    tags:['']
   };
   handleInputChange = e => {
     let name = e.target.name;
@@ -44,6 +44,11 @@ export default class Upload extends Component {
       tags
     });
   }
+  handleClose = removedTag => {
+    const tags = this.state.tags.filter(tag => tag !== removedTag);
+    console.log(tags);
+    this.setState({ tags });
+  };
 
   responseSender = (response) =>{
     console.log(response, `RESPONSESENDER'S response is consoled`, response.status_code, `RESPONSE STATUS CODE IS CONSOLED`);
@@ -72,62 +77,56 @@ export default class Upload extends Component {
   }
   onSubmit = async (e) => {
     e.preventDefault();
-    let tag = new EditableTagGroup();
-    // let tagvalue = await tag.inputReturner();
-    // console.log(tagvalue, `Tag Value Is Consoled`)
-   
     
-    // this.setState({ display: false});
-
+    this.setState({ display: false});
+    let { tags } = this.state;
     let { imageurl } = this.state;
     let { name } = this.state.data;
     let data1 = {
       name: name,
       imageUrl: imageurl,
-      productTag: tag.inputReturner()
+      productTag: tags
     }
-    console.log(data1, `Data value is consoled`)
 
-    // if (name && imageurl)  {
-    //   let data = JSON.stringify(data1);
-    //   let url =`https://gateway.xend.tk/product/api/Product_Catalog/RegisterProduct`;
+    if (name && imageurl)  {
+      let data = JSON.stringify(data1);
+      let url =`https://gateway.xend.tk/product/api/Product_Catalog/RegisterProduct`;
+      console.log(data, `Data value is consoled`);
 
-
-
-    //   fetch(url,{
-    //     method: 'post',
-    //     body: data,
-    //     headers:{
-    //       'Content-Type': 'application/json'
-    //     }
-    //   })
-    //   .then(response => response.json())
-    //   .then(json => {
-    //     console.log(json, "This is the json response");
-    //     this.responseSender(json);
-    //   })  
-    //   .catch(error => {
-    //     console.log(error)
-    //     Swal.fire(
-    //       {
-    //         type: 'error',
-    //         title:'Sorry',
-    //         text: `Something Went Wrong!`
-    //       })
-    //       this.setState({ display: true});
-    //   })
-    // }    
-    // else
-    // {
-    //     Swal.fire(
-    //       {
-    //         type: 'warning',
-    //         title:'Please!',
-    //         text: 'Fill In The Form Correctly'
-    //       }
-    //     )
-    //     this.setState({ display: true});
-    // }
+      fetch(url,{
+        method: 'post',
+        body: data,
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json, "This is the json response");
+        this.responseSender(json);
+      })  
+      .catch(error => {
+        console.log(error)
+        Swal.fire(
+          {
+            type: 'error',
+            title:'Sorry',
+            text: `Something Went Wrong!`
+          })
+          this.setState({ display: true});
+      })
+    }    
+    else
+    {
+        Swal.fire(
+          {
+            type: 'warning',
+            title:'Please!',
+            text: 'Fill In The Form Correctly'
+          }
+        )
+        this.setState({ display: true});
+    }
    
   }
   showWidget = () => {
@@ -191,7 +190,6 @@ export default class Upload extends Component {
                   disabled
                 />
               </div>
-
               <div className="form-group">
                 <label htmlfor="name"><h5>Product Name:</h5></label>
                 <input
@@ -202,11 +200,14 @@ export default class Upload extends Component {
                   placeholder="Enter.."
                   value={name}
                 />
-                <br />
+              </div>
+              <br />
               <div className="form-group">
                   <label htmlfor="name"><h5>Product Tag :</h5></label>
-                  <EditableTagGroup addTags={this.addTags} tags={this.state.tags} />
-              </div>
+                  <EditableTagGroup 
+                  handleClose={this.handleClose}
+                  addTags={this.addTags} 
+                  tags={this.state.tags} />
               </div>
               <br />
               <p>

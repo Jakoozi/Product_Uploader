@@ -3,6 +3,7 @@ import Layout from "../Layout/Layout";
 import Swal from "sweetalert2";
 import { css } from "@emotion/core";
 import { BeatLoader	 } from 'react-spinners';
+import EditableTagGroup from "../../JsFolder/AntDesign";
 
 const override = css`
   display: block;
@@ -20,7 +21,8 @@ export default class Edit extends Component {
         initialdata:{
         },
         imageurl:"",
-        display: true
+        display: true,
+        tags:['']
     };
 
     componentWillMount(){
@@ -92,6 +94,21 @@ export default class Edit extends Component {
     
     
       }
+    addTags = (tagToAdd) => {
+        let { tags } = this.state;
+        if (tagToAdd && tags.indexOf(tagToAdd) === -1) {
+          tags = [...tags, tagToAdd];
+        }
+        console.log(tags);
+        this.setState({
+          tags
+        });
+    }
+    handleClose = removedTag => {
+        const tags = this.state.tags.filter(tag => tag !== removedTag);
+        console.log(tags);
+        this.setState({ tags });
+    };
     onSubmit = (e) => { 
         e.preventDefault();
         this.setState({ display: false});
@@ -154,6 +171,7 @@ export default class Edit extends Component {
           }
     }
     editPageUi = () =>{
+        
         const imageurl = this.state.imageurl;
         const { name } = this.state.data;
 
@@ -170,10 +188,10 @@ export default class Edit extends Component {
                         >
                             Edit A Product
                         </h3>
-                        <image src={imageurl}
+                        <img src={imageurl}
                             class="rounded" alt="Product Image"
                             style={{ height: "200px", width: "300px", marginLeft:"15vh"}}>
-                        </image>
+                        </img>
                         <button
                             className="btn btn-light btn-block btn-primary" 
                             style={{ marginBottom: "5vh", marginTop: "10vh" }} 
@@ -204,7 +222,15 @@ export default class Edit extends Component {
                             value={name}
                             />
                         </div>
-                            <br />
+                        <br />
+                        <div className="form-group">
+                            <label htmlfor="name"><h5>Product Tag :</h5></label>
+                            <EditableTagGroup 
+                            handleClose={this.handleClose}
+                            addTags={this.addTags} 
+                            tags={this.state.tags} />
+                        </div>
+                        <br />
                         <p>
                             <button
                             type="submit"
