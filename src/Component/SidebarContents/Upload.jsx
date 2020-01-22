@@ -21,7 +21,8 @@ export default class Upload extends Component {
     imageurl: "",
     btn: "",
     display: true,
-    tags:['']
+    // tags:['']
+    tags:[]
   };
   handleInputChange = e => {
     let name = e.target.name;

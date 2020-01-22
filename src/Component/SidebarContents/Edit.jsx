@@ -22,7 +22,7 @@ export default class Edit extends Component {
         },
         imageurl:"",
         display: true,
-        tags:['']
+        tags:[]
     };
 
     componentWillMount(){
@@ -225,6 +225,10 @@ export default class Edit extends Component {
                         <br />
                         <div className="form-group">
                             <label htmlfor="name"><h5>Product Tag :</h5></label>
+                            <label>
+                                <h6>previous Tags:</h6>
+                                <p>{}</p>
+                            </label>
                             <EditableTagGroup 
                             handleClose={this.handleClose}
                             addTags={this.addTags} 

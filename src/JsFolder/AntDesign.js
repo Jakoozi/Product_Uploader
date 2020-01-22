@@ -37,7 +37,8 @@ export default class EditableTagGroup extends Component {
           {tags.map((tag, index) => {
             const isLongTag = tag.length > 20;
             const tagElem = (
-              <Tag key={tag} closable={index !== 0} onClose={() => handleClose(tag)}>
+              //inde !== 0
+              <Tag key={tag} closable={index >= 0} onClose={() => handleClose(tag)}>
                 {isLongTag ? `${tag.slice(0, 20)}...` : tag}
               </Tag>
             );
