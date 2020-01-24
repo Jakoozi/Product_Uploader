@@ -121,7 +121,7 @@ export default class Edit extends Component {
         let data1 = {
             staffId: staffId,
             productId: productId,
-            productTag: productTag,
+            ProductTags: productTag,
             name: name,
             imageUrl: imageurl
         }
@@ -148,7 +148,7 @@ export default class Edit extends Component {
               this.responseSender(json);
             })  
             .catch(error => {
-              console.log(error)
+              console.log(error, `error is consoled`)
               Swal.fire(
                 {
                   type: 'error',

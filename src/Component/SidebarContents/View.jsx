@@ -19,7 +19,7 @@ export default class Upload extends Component {
 
   componentDidMount(){
 
-    let url = `https://gateway.xend.tk/product/api/Product_Catalog/GetAllProductsAsync`;
+    let url = `https://gateway.xend.tk/product/api/Product_Catalog/GetAllProductsAsync?page=1&pageSize=2000`;
 
         fetch(url)
         .then(response => response.json())

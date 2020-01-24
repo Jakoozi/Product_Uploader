@@ -86,7 +86,7 @@ export default class Upload extends Component {
     let data1 = {
       name: name,
       imageUrl: imageurl,
-      productTag: tags
+      ProductTags: tags
     }
 
     if (name && imageurl)  {
