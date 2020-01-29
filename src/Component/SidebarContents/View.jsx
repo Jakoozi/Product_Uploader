@@ -27,12 +27,12 @@ export default class Upload extends Component {
         .catch(error => { 
             console.log(error)
             Swal.fire(
-                {
-                  type: 'error',
-                  title:'Opps!!',
-                  text: 'Sorry! Something Went Wrong'
-                }
-              )
+              {
+                type: 'error',
+                title:'please!!',
+                text: 'Check your internet connection'
+              }
+            )
         } );
        
   }

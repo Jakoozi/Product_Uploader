@@ -37,8 +37,8 @@ export default class Edit extends Component {
             Swal.fire(
                 {
                   type: 'error',
-                  title:'Opps!!',
-                  text: 'Sorry! Something Went Wrong'
+                  title:'please!!',
+                  text: 'Check your internet connection'
                 }
               )
         } );
@@ -49,8 +49,11 @@ export default class Edit extends Component {
         console.log(product);
         let url = product.imageUrl;
         let data = { name: product.name };
-        let tags = [product.productTag];
-        console.log(url,data, tags)
+        // let tags = [product.productTag];
+        let splitTags = product.productTag.split();
+        // let splitTags = firstTag.split()
+        let tags = splitTags;
+        console.log(tags, `Tags is consoled`)
         this.setState({initialdata:product, imageurl:url, data, tags})
        
     }
