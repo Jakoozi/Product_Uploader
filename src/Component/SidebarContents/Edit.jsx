@@ -27,7 +27,7 @@ export default class Edit extends Component {
 
     componentWillMount(){
         let id = JSON.parse(window.localStorage.getItem("productId"));
-        let url = `https://gateway.xend.tk/product/api/Product_Catalog/SearchIndexedProductByProductId?productId=${id}`;
+        let url = `https://gateway.xend.tk/product/api/Product_Catalog/GetProductAsync?productId=${id}`;
 
         fetch(url)
         .then(response => response.json())
@@ -49,10 +49,7 @@ export default class Edit extends Component {
         console.log(product);
         let url = product.imageUrl;
         let data = { name: product.name };
-        // let tags = [product.productTag];
-        let splitTags = product.productTag.split();
-        // let splitTags = firstTag.split()
-        let tags = splitTags;
+        let tags = product.productTags
         console.log(tags, `Tags is consoled`)
         this.setState({initialdata:product, imageurl:url, data, tags})
        
