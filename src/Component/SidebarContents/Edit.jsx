@@ -26,13 +26,32 @@ export default class Edit extends Component {
     };
 
     componentWillMount(){
-        let product = JSON.parse(window.localStorage.getItem("product"));
-        this.addDataToState(product);
+        let id = JSON.parse(window.localStorage.getItem("productId"));
+        let url = `https://gateway.xend.tk/product/api/Product_Catalog/SearchIndexedProductByProductId?productId=${id}`;
+
+        fetch(url)
+        .then(response => response.json())
+        .then(json => this.addDataToState(json.data)) 
+        .catch(error => { 
+            console.log(error)
+            Swal.fire(
+                {
+                  type: 'error',
+                  title:'Opps!!',
+                  text: 'Sorry! Something Went Wrong'
+                }
+              )
+        } );
+
+        
     }
     addDataToState = (product) =>{
+        console.log(product);
         let url = product.imageUrl;
         let data = { name: product.name };
-        this.setState({initialdata:product, imageurl:url, data})
+        let tags = [product.productTag];
+        console.log(url,data, tags)
+        this.setState({initialdata:product, imageurl:url, data, tags})
        
     }
     handleInputChange = e => {
@@ -40,7 +59,6 @@ export default class Edit extends Component {
         let value = e.target.value;
         let data = { ...this.state.data };
         data[name] = value;
-        console.log(data);
     
         this.setState({ data });
         console.log(this.state, `Data is logged`)
@@ -115,16 +133,18 @@ export default class Edit extends Component {
 
         let { imageurl } = this.state;
         let { name } = this.state.data;
-        let { productId, staffId, productTag } = this.state.initialdata;
+        let {tags} = this.state;
+        let { productId, staffId} = this.state.initialdata;
 
         //The only things that should be changed are the NAME, IMAGEuRL AND tAG.
         let data1 = {
-            staffId: staffId,
-            productId: productId,
-            ProductTags: productTag,
-            name: name,
-            imageUrl: imageurl
+                productId: productId ,
+                staffId: staffId,
+                name: name ,
+                imageUrl: imageurl,
+                productTags: tags
         }
+        console.log(data1)
        
         if (name && imageurl)  {
 
@@ -225,10 +245,12 @@ export default class Edit extends Component {
                         <br />
                         <div className="form-group">
                             <label htmlfor="name"><h5>Product Tag :</h5></label>
+                            {/* <br/>
                             <label>
                                 <h6>previous Tags:</h6>
-                                <p>{}</p>
-                            </label>
+                                <br/>
+                                <p>{this.state.initialdata.ProductTag}</p>
+                            </label> */}
                             <EditableTagGroup 
                             handleClose={this.handleClose}
                             addTags={this.addTags} 

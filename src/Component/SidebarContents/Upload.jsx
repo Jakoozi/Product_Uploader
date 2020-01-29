@@ -70,7 +70,7 @@ export default class Upload extends Component {
         {
           type: 'info',
           title:'Sorry',
-          text:  `${response.Message}`
+          text:  `${response.message}`
         })
     }
     this.setState({ display: true});

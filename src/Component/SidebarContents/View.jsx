@@ -44,7 +44,7 @@ export default class Upload extends Component {
   }
   //here the entire product is passed and stored to the browser
   handleEditClick = (product) =>{
-    window.localStorage.setItem("product", JSON.stringify(product));
+    window.localStorage.setItem("productId", JSON.stringify(product.productId));
   }
   handleDeletteClick = ( productId) =>{
 
