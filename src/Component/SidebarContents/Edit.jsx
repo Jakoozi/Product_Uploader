@@ -67,10 +67,27 @@ export default class Edit extends Component {
         this.setState({ display: false});
 
         let widget = window.cloudinary.createUploadWidget({
-            cloudName: "jakoozi",
-            uploadPreset: "jakoozipreset",
-            maxImageFileSize: 50700,
-            multiple: false},
+             // cloudName: "jakoozi",
+              // uploadPreset: "jakoozipreset",
+              // maxImageFileSize: 50700,
+              // multiple: false
+              //cloudinary://249525816861115:N8DBN9-KQYrDZwlUV9460X7-riU@xend-catalog/
+
+              // CLOUDINARY_CLOUD_NAME: "xend-catalog",
+              // CLOUDINARY_API_KEY: 249525816861115,
+              // CLOUDINARY_API_SECRET: N8DBN9-KQYrDZwlUV9460X7_riU,
+              // maxImageFileSize: 50700,
+              // multiple: false
+
+              cloudName: "xend-catalog",
+              uploadPreset: "xend-catalog",
+              maxImageFileSize: 50700,
+              multiple: false,
+              maxImageWidth: 400,
+              maxImageHeight: 400,
+              validateMaxWidthHeight: true,
+              cloudinary: `//249525816861115:N8DBN9-KQYrDZwlUV9460X7-riU@xend-catalog/`
+          },
             (error, result) => { this.checkUploadResult(result) }
         );
         widget.open();
@@ -210,7 +227,8 @@ export default class Edit extends Component {
                         </h3>
                         <img src={imageurl}
                             class="rounded" alt="Product Image"
-                            style={{ height: "200px", width: "300px", marginLeft:"15vh"}}>
+                            // style={{ height: "200px", width: "300px", marginLeft:"15vh"}}>
+                            style={{ height: "400px", width: "400px", marginLeft:"15vh"}}>
                         </img>
                         <button
                             className="btn btn-light btn-block btn-primary" 
@@ -265,6 +283,7 @@ export default class Edit extends Component {
                                 <h5> Update Product</h5>
                             </button>
                         </p>
+                        
                     </form>
                     
                 </div>
@@ -300,3 +319,12 @@ export default class Edit extends Component {
        );
    }
 }
+
+    // <form action="http://light.pinsupreme.com/index.html" class="dropzone dz-clickable" id="my-awesome-dropzone">
+    //     <div class="dz-message">
+    //         <div>
+    //             <h4>Drop files here or click to upload.</h4>
+    //             <div class="text-muted">(This is just a demo dropzone. Selected files are not actually uploaded)</div>
+    //         </div>
+    //     </div>
+    // </form>

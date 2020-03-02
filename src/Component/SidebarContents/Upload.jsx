@@ -134,10 +134,28 @@ export default class Upload extends Component {
     this.setState({display: false });
 
     let widget = window.cloudinary.createUploadWidget({
-      cloudName: "jakoozi",
-      uploadPreset: "jakoozipreset",
+      // cloudName: "jakoozi",
+      // uploadPreset: "jakoozipreset",
+      // maxImageFileSize: 50700,
+      // multiple: false
+      //cloudinary://249525816861115:N8DBN9-KQYrDZwlUV9460X7-riU@xend-catalog/
+
+      // CLOUDINARY_CLOUD_NAME: "xend-catalog",
+      // CLOUDINARY_API_KEY: 249525816861115,
+      // CLOUDINARY_API_SECRET: N8DBN9-KQYrDZwlUV9460X7_riU,
+      // maxImageFileSize: 50700,
+      // multiple: false
+
+      cloudName: "xend-catalog",
+      uploadPreset: "xend-catalog",
       maxImageFileSize: 50700,
-      multiple: false
+      multiple: false,
+      maxImageWidth: 400,
+      maxImageHeight: 400,
+      validateMaxWidthHeight: true,
+      cloudinary: `//249525816861115:N8DBN9-KQYrDZwlUV9460X7-riU@xend-catalog/`
+      //dimension should be 400 by 400 pixels
+
     },
       (error, result) => { this.checkUploadResult(result) }
     );
