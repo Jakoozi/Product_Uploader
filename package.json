@@ -16,7 +16,7 @@
     "react-moment": "^0.9.6",
     "react-notifications": "^1.4.3",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "5.0.1",
     "react-sound": "^1.2.0",
     "react-spinners": "^0.6.1",
     "react-tag-input": "^6.4.1",
